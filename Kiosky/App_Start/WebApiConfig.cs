@@ -53,9 +53,9 @@ namespace Kiosky
 
             config.Routes.MapHttpRoute(
                 name: "GetUser",
-                routeTemplate: ConstructRouteUri("/user"),
+                routeTemplate: ConstructRouteUri("/user/{id}"),
                 defaults: new { controller = "User", action = "GetUser" },
-                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+                constraints: new { id = "\\d+", httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
             );
 
             config.Routes.MapHttpRoute(
@@ -70,6 +70,13 @@ namespace Kiosky
                 routeTemplate: ConstructRouteUri("/token"),
                 defaults: new { controller = "Auth", action = "GetToken" },
                 constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "RemoveToken",
+                routeTemplate: ConstructRouteUri("/token"),
+                defaults: new { controller = "Auth", action = "RemoveToken" },
+                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) }
             );
         }
 

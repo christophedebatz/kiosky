@@ -16,7 +16,6 @@ namespace Kiosky.Models
         [Required]
         public string Username { get; set; }
 
-        [JsonIgnore]
         [BsonElement]
         [Required]
         public string Password { get; set; }

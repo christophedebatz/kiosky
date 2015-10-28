@@ -30,9 +30,16 @@ namespace Kiosky.Controllers
         }
 
         [ActionName("GetUser")]
-        public HttpResponseMessage GetUser(HttpRequestMessage request)
+        public HttpResponseMessage GetUser(HttpRequestMessage request, int id)
         {
-            return CreateHttpResponse(request, this.userRepository.GetUser());
+            IUser user = this.userRepository.GetUser(id);
+
+            if (user == null)
+            {
+                return CreateHttpErrorResponse(HttpStatusCode.NotFound, request, "User not found");
+            }
+
+            return CreateHttpResponse(request, user);
         }
 
         [HttpPut]
@@ -59,7 +66,7 @@ namespace Kiosky.Controllers
             try
             {
                 this.userRepository.UpdateUser(user);
-                return CreateHttpResponse(HttpStatusCode.OK, request);
+                return CreateHttpResponse(HttpStatusCode.NoContent, request);
             }
             catch (Exception ex)
             {

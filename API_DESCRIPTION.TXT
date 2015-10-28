@@ -1,0 +1,31 @@
+Kiosky v1.0
+
+What I did
+
+- All (or a big part) of the ASP.NET web API backend
+	- Available routes:
+		GET /users [ user, admin ]
+			To display the list of all users
+			Requirements: <headers> X-KIOSKY-AUTH
+
+		POST /users [ admin ]
+			To update an existant user
+			Requirements: <headers> X-KIOSKY-AUTH
+						  <body> the user object serialized in json or xml (no need id)
+
+		PUT /users [admin ]
+			To create a new user
+			Requirements: <headers> X-KIOSKY-AUTH
+						  <body> the user object serialized in json or xml (need an id)
+
+		GET /user/<userId> [ user, admin ]
+			To display only one user (by its id)
+			Requirements: <headers> X-KIOSKY-AUTH
+
+		POST /token [ anonymous ]
+			To log in a user, returns a set of useful session data (like ttl, access token or username and roles)
+			Requirements: <body> username + password (post format)
+
+		DELETE /token [ user, admin ]
+			To kill the current-user session
+			Requirements: <headers> application/x-www-form-urlencoded

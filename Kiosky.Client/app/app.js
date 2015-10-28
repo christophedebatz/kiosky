@@ -1,5 +1,6 @@
 var app = angular.module('app', [
-	'login'
+	'login',
+	'users'
 ]);
 
 app.run(function ($rootScope) {

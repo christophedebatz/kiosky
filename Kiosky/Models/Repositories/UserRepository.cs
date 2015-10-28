@@ -74,7 +74,11 @@ namespace Kiosky.Services.Repositories
                 throw new ArgumentNullException("user");
             }
 
-            this.userCollection.ReplaceOneAsync<IUser>(u => u.Id == user.Id, user);
+            var builder = Builders<IUser>.Filter;
+
+            var filter = builder.Eq("_id", user.Id);
+
+            this.userCollection.ReplaceOneAsync(filter, user);
         }
 
         /// <summary>
@@ -91,12 +95,17 @@ namespace Kiosky.Services.Repositories
         }
 
         /// <summary>
-        /// 
+        /// Get user from its id.
         /// </summary>
+        /// <param name="id">user id</param>
         /// <returns></returns>
-        public IUser GetUser()
+        public IUser GetUser(int id)
         {
-            return new User(1, "Christophe", AuthService.EncryptWithSHA1("admin"), new [] { "user", "admin" });
+            var builder = Builders<IUser>.Filter;
+
+            var filter = builder.Eq("_id", id);
+
+            return this.userCollection.Find<IUser>(filter).FirstOrDefaultAsync().Result;
         }
 
         /// <summary>
